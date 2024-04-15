@@ -1,5 +1,8 @@
-﻿using UssJuniorTest.Infrastructure.Repositories;
+﻿using UssJuniorTest.Core;
+using UssJuniorTest.Core.Models;
+using UssJuniorTest.Infrastructure.Repositories;
 using UssJuniorTest.Infrastructure.Store;
+using UssJuniorTest.Logic;
 
 namespace UssJuniorTest;
 
@@ -9,7 +12,10 @@ public static class ServiceCollectionExtensions
     {
         services.AddSingleton<IStore, InMemoryStore>();
 
-        services.AddScoped<CarRepository>();
-        services.AddScoped<PersonRepository>();
+        services.AddScoped<IRepository<Car>, CarRepository>();
+        services.AddScoped<IRepository<Person>, PersonRepository>();
+        services.AddScoped<IRepository<DriveLog>, DriveLogRepository>();
+        services.AddScoped<IAllRepositories, AllRepositories>();
+        services.AddTransient<IDriveLogManager, DriveLogManager>();
     }
 }
